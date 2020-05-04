@@ -6,7 +6,7 @@ class Treasury(scrapy.Spider):
 
     def start_requests(self):
         # Empty output file
-        open("Treasury.csv", 'w').close()
+        open("Treasury.json", 'w').close()
         # Only should empty before this spider runs
         urls = [
             'https://home.treasury.gov/news/press-releases'
@@ -17,11 +17,15 @@ class Treasury(scrapy.Spider):
     def getFirstParagraph(self, response, title, link, date):
         self.log('\n \n')
         self.log(response.cb_kwargs)
+        description = response.css('.field--name-field-news-body > p:nth-child(2) ::text').get()
+
+        if description == "WASHINGTON":
+            description = response.css('.field--name-field-news-body > p:nth-child(3) ::text').get()
         item = {
             'title': title,
             'link': link,
             "date": date,
-            'description': response.css('.field--name-field-news-body > p:nth-child(2) ::text').get()
+            'description': description
         }
         return item
 
