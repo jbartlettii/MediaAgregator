@@ -6,7 +6,7 @@ class Congress(scrapy.Spider):
 
     def start_requests(self):
         # Empty output file
-        open("Congress.csv", 'w').close()
+        open("Congress.json", 'w').close()
         # Only should empty before this spider runs
         urls = [
             'https://www.congress.gov/quick-search/legislation?wordsPhrases=&wordVariants=on&congresses%5B%5D=all'
